@@ -1,0 +1,48 @@
+/* ============================================
+   C2W Engine — grid.css
+   12 栅格系统
+   ============================================ */
+
+.c2w-grid {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5em;
+  width: 100%;
+  align-items: start;
+}
+
+/* 列宽 class: c2w-col-1 到 c2w-col-12 */
+.c2w-col-1  { grid-column: span 1; }
+.c2w-col-2  { grid-column: span 2; }
+.c2w-col-3  { grid-column: span 3; }
+.c2w-col-4  { grid-column: span 4; }
+.c2w-col-5  { grid-column: span 5; }
+.c2w-col-6  { grid-column: span 6; }
+.c2w-col-7  { grid-column: span 7; }
+.c2w-col-8  { grid-column: span 8; }
+.c2w-col-9  { grid-column: span 9; }
+.c2w-col-10 { grid-column: span 10; }
+.c2w-col-11 { grid-column: span 11; }
+.c2w-col-12 { grid-column: span 12; }
+
+/* 偏移 */
+.c2w-offset-1  { grid-column-start: 2; }
+.c2w-offset-2  { grid-column-start: 3; }
+.c2w-offset-3  { grid-column-start: 4; }
+.c2w-offset-4  { grid-column-start: 5; }
+.c2w-offset-5  { grid-column-start: 6; }
+.c2w-offset-6  { grid-column-start: 7; }
+
+/* 行跨度 */
+.c2w-row-2 { grid-row: span 2; }
+.c2w-row-3 { grid-row: span 3; }
+
+/* 间距变体 */
+.c2w-grid.gap-sm { gap: 0.75em; }
+.c2w-grid.gap-lg { gap: 2.5em; }
+.c2w-grid.gap-none { gap: 0; }
+
+/* 垂直对齐 */
+.c2w-grid.align-center { align-items: center; }
+.c2w-grid.align-end { align-items: end; }
+.c2w-grid.align-stretch { align-items: stretch; }

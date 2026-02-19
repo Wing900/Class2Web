@@ -1,0 +1,162 @@
+/* ============================================
+   C2W Engine — layouts.css
+   强约束页型
+   ============================================ */
+
+/* ---- 封面页 c2w-cover ---- */
+.reveal section.c2w-cover {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 2em;
+}
+
+.reveal section.c2w-cover h1 {
+  font-size: 3em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.2em;
+}
+
+.reveal section.c2w-cover .subtitle {
+  font-size: 1.2em;
+  color: var(--c2w-text-light);
+  margin-bottom: 1.5em;
+}
+
+.reveal section.c2w-cover .author {
+  font-size: 0.9em;
+  color: var(--c2w-primary);
+  font-weight: 600;
+}
+
+.reveal section.c2w-cover .affiliation {
+  font-size: 0.75em;
+  color: var(--c2w-text-light);
+  margin-top: 0.3em;
+}
+
+/* ---- 章节页 c2w-chapter ---- */
+.reveal section.c2w-chapter {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  padding: 3em;
+  background: var(--c2w-primary) !important;
+  color: #fff !important;
+}
+
+.reveal section.c2w-chapter h2 {
+  font-size: 3.5em;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.1em;
+}
+
+.reveal section.c2w-chapter .chapter-num {
+  font-size: 6em;
+  font-weight: 800;
+  opacity: 0.15;
+  position: absolute;
+  right: 1em;
+  top: 0.2em;
+  line-height: 1;
+  color: #fff;
+}
+
+.reveal section.c2w-chapter p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1em;
+}
+
+/* ---- 总结页 c2w-summary ---- */
+.reveal section.c2w-summary {
+  text-align: left;
+  padding: 2em;
+}
+
+.reveal section.c2w-summary h2 {
+  font-size: 1.8em;
+  border-bottom: 3px solid var(--c2w-primary);
+  padding-bottom: 0.3em;
+  margin-bottom: 0.8em;
+}
+
+.reveal section.c2w-summary ul {
+  font-size: 0.85em;
+  line-height: 2;
+}
+
+.reveal section.c2w-summary li::marker {
+  color: var(--c2w-primary);
+}
+
+/* ---- 强调结论页 c2w-statement ---- */
+.reveal section.c2w-statement {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.reveal section.c2w-statement p {
+  font-size: 2em;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--c2w-primary);
+  max-width: 80%;
+}
+
+.reveal section.c2w-statement .source {
+  font-size: 0.7em;
+  color: var(--c2w-text-light);
+  margin-top: 1em;
+  font-weight: 400;
+}
+
+/* ---- 左右对比 c2w-dual ---- */
+.reveal section.c2w-dual {
+  padding: 1.5em;
+}
+
+.reveal section.c2w-dual .dual-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  height: 80%;
+  align-items: start;
+}
+
+.reveal section.c2w-dual .dual-left,
+.reveal section.c2w-dual .dual-right {
+  padding: 1em;
+}
+
+.reveal section.c2w-dual .dual-left {
+  border-right: 2px solid var(--c2w-bg-alt);
+}
+
+/* ---- 代码展示页 c2w-code ---- */
+.reveal section.c2w-code {
+  text-align: left;
+  padding: 1.5em;
+}
+
+.reveal section.c2w-code h2 {
+  font-size: 1.4em;
+  margin-bottom: 0.6em;
+}
+
+.reveal section.c2w-code pre {
+  font-size: 0.5em;
+  max-height: 70vh;
+  overflow: auto;
+}

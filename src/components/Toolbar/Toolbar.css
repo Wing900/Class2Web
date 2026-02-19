@@ -1,0 +1,215 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 16px 0 20px;
+  background: var(--c2w-ide-bg);
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.toolbar__logo {
+  font-family: 'LXGW WenKai', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--c2w-ide-text);
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+.toolbar__spacer {
+  flex: 1;
+}
+
+/* Circular icon buttons */
+.toolbar__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--c2w-ide-text-muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.toolbar__icon:hover {
+  background: var(--c2w-ide-btn);
+  color: var(--c2w-ide-text);
+}
+
+.toolbar__icon:active {
+  transform: scale(0.9);
+}
+
+.toolbar__icon--active {
+  background: var(--c2w-ide-btn);
+  color: var(--c2w-ide-text);
+}
+
+/* Dropdown menu */
+.toolbar__menu-anchor {
+  position: relative;
+}
+
+.toolbar__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 210px;
+  background: var(--c2w-ide-surface);
+  border: 1px solid rgba(128, 128, 128, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  z-index: 2000;
+}
+
+.toolbar__dropdown-label {
+  font-family: 'LXGW WenKai', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--c2w-ide-text-muted);
+  padding: 6px 10px 4px;
+}
+
+.toolbar__dropdown-row {
+  display: flex;
+  gap: 6px;
+  padding: 2px 10px 6px;
+}
+
+.toolbar__chip {
+  flex: 1;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: var(--c2w-ide-btn);
+  color: var(--c2w-ide-text-muted);
+  font-family: 'LXGW WenKai', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.12s;
+}
+
+.toolbar__chip:hover {
+  color: var(--c2w-ide-text);
+}
+
+.toolbar__chip:active {
+  transform: scale(0.95);
+}
+
+.toolbar__chip--active {
+  background: #5e81ac;
+  color: #ffffff;
+}
+
+.toolbar__chip--active:hover {
+  background: #4c6f9a;
+  color: #ffffff;
+}
+
+.toolbar__dropdown-divider {
+  height: 1px;
+  background: var(--c2w-ide-btn);
+  margin: 4px 10px;
+}
+
+.toolbar__dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-family: 'LXGW WenKai', sans-serif;
+  font-size: 13px;
+  color: var(--c2w-ide-text);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.toolbar__dropdown-item:hover {
+  background: var(--c2w-ide-btn);
+}
+
+/* Toggle switch — iOS style */
+.toolbar__toggle {
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 26px;
+  border-radius: 13px;
+  background: var(--c2w-ide-btn);
+  padding: 2px;
+  transition: background 0.25s ease;
+  cursor: pointer;
+}
+
+.toolbar__toggle--on {
+  background: #5e81ac;
+}
+
+.toolbar__toggle-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.toolbar__toggle--on .toolbar__toggle-thumb {
+  transform: translateX(18px);
+}
+
+/* Font selector */
+.toolbar__dropdown-fonts {
+  padding: 2px 10px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toolbar__font-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.toolbar__font-item:hover {
+  background: var(--c2w-ide-btn);
+}
+
+.toolbar__font-item--active {
+  background: #5e81ac;
+  color: #ffffff;
+}
+
+.toolbar__font-item--active:hover {
+  background: #4c6f9a;
+}
+
+.toolbar__font-name {
+  font-family: 'LXGW WenKai', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.toolbar__font-desc {
+  font-family: 'LXGW WenKai', sans-serif;
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.toolbar__font-item--active .toolbar__font-desc {
+  opacity: 0.8;
+}

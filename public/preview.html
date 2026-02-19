@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C2W Preview</title>
+
+  <!-- Web Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;600;700;800&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="reveal/reset.css">
+  <link rel="stylesheet" href="reveal/reveal.css">
+  <link rel="stylesheet" href="reveal/plugin/highlight/monokai.css">
+
+  <!-- C2W Engine CSS -->
+  <style id="c2w-nord"></style>
+  <style id="c2w-base"></style>
+  <style id="c2w-layouts"></style>
+  <style id="c2w-grid"></style>
+
+  <style id="c2w-font-override"></style>
+  <style id="c2w-custom-theme"></style>
+
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+    .reveal .slides section { box-sizing: border-box; }
+    /* Preview: show all fragments so they're visible without advancing */
+    .reveal .slides .fragment {
+      opacity: 1 !important;
+      visibility: inherit !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section><h1>Class2Web</h1><p>等待编辑器内容...</p></section>
+    </div>
+  </div>
+
+  <script type="module">
+    import Reveal from './reveal/reveal.esm.js';
+    import Highlight from './reveal/plugin/highlight/highlight.esm.js';
+
+    const FONT_MAP = {
+      modern: "'Inter', 'Noto Sans SC', 'Microsoft YaHei', sans-serif",
+      wenkai: "'LXGW WenKai', 'Microsoft YaHei', sans-serif",
+      serif:  "'Noto Serif SC', 'Georgia', 'SimSun', serif",
+    };
+    const INBOUND_MESSAGE_TYPES = new Set([
+      'update-slides',
+      'change-theme',
+      'goto-slide',
+      'change-font',
+      'apply-custom-theme',
+      'change-transition',
+    ]);
+
+    class PreviewRuntime {
+      constructor() {
+        this.deck = null;
+        this.targetSlide = 0;
+        this.initialized = false;
+        this.pendingSlides = null;
+      }
+
+      applyFont(key) {
+        const ff = FONT_MAP[key] || FONT_MAP.modern;
+        document.getElementById('c2w-font-override').textContent =
+          `.reveal { font-family: ${ff}; }` +
+          `.reveal h1, .reveal h2, .reveal h3 { font-family: ${ff}; }`;
+      }
+
+      async loadCSS() {
+        const files = [
+          { id: 'c2w-nord', path: 'c2w-engine/nord.css' },
+          { id: 'c2w-base', path: 'c2w-engine/base.css' },
+          { id: 'c2w-layouts', path: 'c2w-engine/layouts.css' },
+          { id: 'c2w-grid', path: 'c2w-engine/grid.css' },
+        ];
+        await Promise.all(files.map(async ({ id, path }) => {
+          const res = await fetch(path);
+          const css = await res.text();
+          document.getElementById(id).textContent = css;
+        }));
+      }
+
+      async initReveal() {
+        if (this.deck) {
+          this.deck.destroy();
+        }
+        this.deck = new Reveal({
+          hash: false,
+          center: true,
+          controls: false,
+          progress: false,
+          slideNumber: false,
+          transition: 'none',
+          transitionSpeed: 'fastest',
+          width: 1280,
+          height: 720,
+          margin: 0.04,
+          plugins: [Highlight],
+        });
+        await this.deck.initialize();
+        if (this.targetSlide > 0) {
+          this.deck.slide(this.targetSlide);
+        }
+      }
+
+      async typesetMathIfNeeded() {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          try {
+            await window.MathJax.typesetPromise();
+          } catch (e) {
+            // ignore MathJax errors in preview
+          }
+        }
+      }
+
+      async applySlides(slidesHTML, preferredIndex) {
+        if (!this.deck) return;
+        const slidesEl = document.querySelector('.reveal .slides');
+        if (!slidesEl) return;
+
+        slidesEl.style.visibility = 'hidden';
+        slidesEl.innerHTML = slidesHTML;
+        this.deck.sync();
+
+        const total = this.deck.getTotalSlides();
+        const safeIdx = Math.min(preferredIndex, Math.max(total - 1, 0));
+        this.targetSlide = safeIdx;
+        this.deck.slide(safeIdx);
+
+        requestAnimationFrame(() => {
+          slidesEl.style.visibility = '';
+        });
+
+        await this.typesetMathIfNeeded();
+      }
+
+      async handleMessage(event) {
+        if (event.source !== window.parent) return;
+        const message = this.parseIncomingMessage(event.data);
+        if (!message) return;
+        const { type, payload } = message;
+
+        if (type === 'update-slides') {
+          if (!this.initialized) {
+            this.pendingSlides = payload;
+            return;
+          }
+          const currentIdx = this.deck ? this.deck.getState().indexh : this.targetSlide;
+          await this.applySlides(payload, currentIdx);
+          return;
+        }
+
+        if (type === 'change-theme') {
+          document.documentElement.setAttribute('data-theme', payload);
+          return;
+        }
+
+        if (type === 'change-font') {
+          this.applyFont(payload);
+          return;
+        }
+
+        if (type === 'apply-custom-theme') {
+          document.getElementById('c2w-custom-theme').textContent = payload;
+          return;
+        }
+
+        if (type === 'change-transition') {
+          if (this.deck) {
+            this.deck.configure({ transition: payload });
+          }
+          return;
+        }
+
+        if (type === 'goto-slide') {
+          const idx = parseInt(payload, 10);
+          if (Number.isNaN(idx) || idx < 0) return;
+          this.targetSlide = idx;
+          if (this.deck) {
+            this.deck.slide(idx);
+          }
+        }
+      }
+
+      parseIncomingMessage(data) {
+        if (!data || typeof data !== 'object') return null;
+        const { type, payload } = data;
+        if (typeof type !== 'string' || !INBOUND_MESSAGE_TYPES.has(type)) return null;
+        if (typeof payload !== 'string') return null;
+        return { type, payload };
+      }
+
+      async bootstrap() {
+        // Set up listener before async init so messages are not lost.
+        window.addEventListener('message', (event) => {
+          void this.handleMessage(event);
+        });
+
+        await this.loadCSS();
+        await this.initReveal();
+        this.initialized = true;
+
+        if (this.pendingSlides) {
+          await this.applySlides(this.pendingSlides, this.targetSlide);
+          this.pendingSlides = null;
+        }
+
+        window.parent.postMessage({ type: 'preview-ready' }, '*');
+      }
+    }
+
+    const runtime = new PreviewRuntime();
+    await runtime.bootstrap();
+  </script>
+
+  <!-- MathJax 3 (CDN fallback, offline version can be placed in /mathjax/) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      },
+      startup: {
+        typeset: true,
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+</html>

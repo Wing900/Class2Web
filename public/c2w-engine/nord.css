@@ -1,0 +1,38 @@
+/* ============================================
+   C2W Engine — nord.css
+   Nord 色系主题变量
+   ============================================ */
+
+:root {
+  /* Polar Night — 暗色系 */
+  --c2w-polar-night: #2E3440;
+  --c2w-polar-night-light: #3B4252;
+
+  /* Snow Storm — 亮色背景 */
+  --c2w-bg: #ECEFF4;
+  --c2w-bg-alt: #E5E9F0;
+
+  /* 文字 */
+  --c2w-text: #2E3440;
+  --c2w-text-light: #4C566A;
+
+  /* Frost — 主色调 */
+  --c2w-primary: #5E81AC;
+  --c2w-accent: #88C0D0;
+  --c2w-frost-light: #8FBCBB;
+  --c2w-frost-dark: #81A1C1;
+
+  /* Aurora — 语义色 */
+  --c2w-success: #A3BE8C;
+  --c2w-warning: #EBCB8B;
+  --c2w-danger: #BF616A;
+  --c2w-info: #B48EAD;
+}
+
+/* 深色主题变体 */
+[data-theme="nord-dark"] {
+  --c2w-bg: #2E3440;
+  --c2w-bg-alt: #3B4252;
+  --c2w-text: #ECEFF4;
+  --c2w-text-light: #D8DEE9;
+}

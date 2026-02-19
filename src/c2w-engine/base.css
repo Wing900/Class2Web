@@ -1,0 +1,143 @@
+/* ============================================
+   C2W Engine — base.css
+   全局硬约束：去圆角、去装饰线、排版基线
+   ============================================ */
+
+/* 去圆角 — 工业美学 */
+* {
+  border-radius: 0 !important;
+}
+
+/* Reveal 基础覆盖 */
+.reveal section {
+  border: none;
+  box-shadow: none;
+  text-align: left;
+}
+
+.reveal {
+  font-family: 'Inter', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  font-size: 28px;
+  color: var(--c2w-text);
+  background: var(--c2w-bg);
+}
+
+/* 标题层级 */
+.reveal h1 {
+  font-weight: 800;
+  font-size: 2.4em;
+  letter-spacing: -0.02em;
+  color: var(--c2w-text);
+  margin-bottom: 0.4em;
+}
+
+.reveal h2 {
+  font-weight: 700;
+  font-size: 1.6em;
+  letter-spacing: -0.01em;
+  color: var(--c2w-text);
+  margin-bottom: 0.3em;
+}
+
+.reveal h3 {
+  font-weight: 600;
+  font-size: 1.2em;
+  color: var(--c2w-text-light);
+  margin-bottom: 0.3em;
+}
+
+/* 段落与列表 */
+.reveal p {
+  line-height: 1.6;
+  margin-bottom: 0.8em;
+  color: var(--c2w-text);
+}
+
+.reveal ul,
+.reveal ol {
+  display: block;
+  margin-left: 1.2em;
+  line-height: 1.8;
+}
+
+.reveal li {
+  margin-bottom: 0.3em;
+}
+
+/* 代码块 */
+.reveal pre {
+  background: var(--c2w-polar-night, #2E3440);
+  color: #D8DEE9;
+  padding: 1em 1.2em;
+  font-size: 0.55em;
+  line-height: 1.5;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reveal code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: var(--c2w-bg-alt);
+  padding: 0.1em 0.3em;
+  font-size: 0.9em;
+}
+
+.reveal pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* 图片约束 */
+.reveal img {
+  max-width: 100%;
+  height: auto;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 页脚品牌水印 */
+.c2w-footer {
+  position: fixed;
+  bottom: 12px;
+  right: 24px;
+  font-size: 0.45em;
+  opacity: 0.35;
+  color: var(--c2w-text-light);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* 表格 */
+.reveal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8em;
+  margin: 1em 0;
+}
+
+.reveal th {
+  background: var(--c2w-primary);
+  color: #fff;
+  padding: 0.6em 1em;
+  text-align: left;
+  font-weight: 600;
+}
+
+.reveal td {
+  padding: 0.5em 1em;
+  border-bottom: 1px solid var(--c2w-bg-alt);
+}
+
+.reveal tr:nth-child(even) td {
+  background: var(--c2w-bg-alt);
+}
+
+/* 引用块 */
+.reveal blockquote {
+  border-left: 4px solid var(--c2w-primary);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background: var(--c2w-bg-alt);
+  font-style: normal;
+}

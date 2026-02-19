@@ -1,0 +1,304 @@
+.workspace-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--c2w-ide-text);
+}
+
+/* ── Header ── */
+.workspace-panel__header {
+  padding: 24px 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.workspace-panel__title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  font-family: 'LXGW WenKai', sans-serif;
+}
+
+.workspace-panel__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.workspace-panel__btn {
+  border: none;
+  border-radius: 999px;
+  background: var(--c2w-ide-btn);
+  color: var(--c2w-ide-text);
+  padding: 8px 18px;
+  font-size: 13px;
+  font-family: 'LXGW WenKai', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.workspace-panel__btn:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.workspace-panel__btn:active {
+  transform: scale(0.96);
+}
+
+.workspace-panel__btn--accent {
+  background: #5e81ac;
+  color: #fff;
+}
+
+.workspace-panel__btn--accent:hover {
+  background: #5278a0;
+}
+
+.workspace-panel__hint {
+  font-size: 11px;
+  color: var(--c2w-ide-text-muted);
+  font-family: 'LXGW WenKai', sans-serif;
+}
+
+/* ── Scrollable content ── */
+.workspace-panel__content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 32px 32px;
+}
+
+.workspace-panel__empty {
+  text-align: center;
+  color: var(--c2w-ide-text-muted);
+  font-size: 13px;
+  padding-top: 56px;
+  font-family: 'LXGW WenKai', sans-serif;
+}
+
+/* ── Tree ── */
+.workspace-panel__tree-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.workspace-panel__tree-root {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Nested lists indent */
+.workspace-panel__tree-list .workspace-panel__tree-list {
+  padding-left: 20px;
+}
+
+/* ── Tree item (each row) ── */
+.workspace-panel__tree-item {
+  position: relative;
+  padding: 2px 0;
+}
+
+/* Vertical guide line for nested items */
+.workspace-panel__tree-list:not(.workspace-panel__tree-root) > .workspace-panel__tree-item::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(94, 129, 172, 0.2);
+}
+
+/* Horizontal branch connector */
+.workspace-panel__tree-list:not(.workspace-panel__tree-root) > .workspace-panel__tree-item::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 20px;
+  width: 10px;
+  height: 1px;
+  background: rgba(94, 129, 172, 0.2);
+}
+
+/* Last child: vertical line stops at the connector */
+.workspace-panel__tree-list:not(.workspace-panel__tree-root) > .workspace-panel__tree-item:last-child::before {
+  bottom: calc(100% - 20px);
+}
+
+/* ── Node (clickable row) ── */
+.workspace-panel__node {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--c2w-ide-text);
+  font-size: 13.5px;
+  font-family: 'LXGW WenKai', sans-serif;
+  padding: 9px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.12s;
+  text-align: left;
+}
+
+.workspace-panel__node:hover {
+  background: rgba(128, 140, 160, 0.12);
+}
+
+.workspace-panel__node:active {
+  transform: scale(0.98);
+}
+
+.workspace-panel__node--selected {
+  background: rgba(94, 129, 172, 0.18);
+}
+
+.workspace-panel__node--selected:hover {
+  background: rgba(94, 129, 172, 0.26);
+}
+
+.workspace-panel__node--active {
+  background: rgba(94, 129, 172, 0.22);
+  font-weight: 600;
+}
+
+.workspace-panel__node--active:hover {
+  background: rgba(94, 129, 172, 0.3);
+}
+
+/* ── Icon ── */
+.workspace-panel__icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.workspace-panel__node--selected .workspace-panel__icon,
+.workspace-panel__node--active .workspace-panel__icon {
+  opacity: 0.9;
+}
+
+/* ── Label ── */
+.workspace-panel__node-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
+}
+
+@media (max-width: 640px) {
+  .workspace-panel__header {
+    padding: 16px 16px 12px;
+  }
+
+  .workspace-panel__content {
+    padding: 0 16px 24px;
+  }
+
+  .workspace-panel__tree-root {
+    max-width: 100%;
+  }
+
+  .workspace-panel__node-label {
+    max-width: 200px;
+  }
+}
+
+/* ── Inline rename input ── */
+.workspace-panel__rename-input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid rgba(94, 129, 172, 0.5);
+  border-radius: 6px;
+  background: var(--c2w-ide-surface, #f5f6f9);
+  color: var(--c2w-ide-text, #2e3440);
+  font-size: 13.5px;
+  font-family: 'LXGW WenKai', sans-serif;
+  padding: 3px 8px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.workspace-panel__rename-input:focus {
+  border-color: #5e81ac;
+  box-shadow: 0 0 0 2px rgba(94, 129, 172, 0.2);
+}
+
+/* ── Context menu ── */
+.workspace-panel__ctx {
+  position: fixed;
+  z-index: 3000;
+  min-width: 120px;
+  background: var(--c2w-ide-surface, #f5f6f9);
+  border: 1px solid rgba(128, 128, 128, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  animation: ctx-pop 0.16s cubic-bezier(0.2, 0.6, 0.35, 1);
+  transform-origin: top left;
+}
+
+@keyframes ctx-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.workspace-panel__ctx-item {
+  border: none;
+  background: transparent;
+  color: var(--c2w-ide-text, #2e3440);
+  font-size: 13px;
+  font-family: 'LXGW WenKai', sans-serif;
+  padding: 8px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.workspace-panel__ctx-item:hover {
+  background: rgba(94, 129, 172, 0.12);
+}
+
+.workspace-panel__ctx-item--danger {
+  color: #bf616a;
+}
+
+.workspace-panel__ctx-item--danger:hover {
+  background: rgba(191, 97, 106, 0.1);
+}
+
+.workspace-panel__ctx-divider {
+  height: 1px;
+  background: var(--c2w-ide-btn, #e0e3ea);
+  margin: 3px 8px;
+}
+
+/* ── Drag & drop ── */
+.workspace-panel__tree-item--dragging {
+  opacity: 0.35;
+}
+
+.workspace-panel__node--drop-target {
+  background: rgba(94, 129, 172, 0.18) !important;
+  outline: 2px dashed rgba(94, 129, 172, 0.5);
+  outline-offset: -2px;
+}
+
+.workspace-panel__btn--drop {
+  background: rgba(94, 129, 172, 0.3) !important;
+  outline: 2px dashed rgba(94, 129, 172, 0.5);
+  outline-offset: -2px;
+}
