@@ -7,17 +7,31 @@ export interface InstructionSnippet {
 export const INSTRUCTION_SNIPPETS: InstructionSnippet[] = [
   {
     name: '样式兼容注意（必看）',
-    desc: '自定义样式请优先使用项目变量 --c2w-*。全局基础样式会重置圆角和图片阴影，若需要保留，请用 !important 覆盖。',
-    code: `<!-- 变量命名请用 --c2w-*，不要用 --bg / --primary -->
-<section style="background: var(--c2w-bg); color: var(--c2w-text);">
+    desc: '自定义样式请优先使用项目变量 --c2w-*。基础样式会重置圆角和图片阴影为 0，行内 style 可直接覆盖，无需 !important。',
+    code: `<section style="background: var(--c2w-bg); color: var(--c2w-text);">
   <img
     src="..."
-    style="border-radius: 12px !important; box-shadow: 0 12px 32px rgba(0,0,0,.15) !important;"
+    style="border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.15);"
     alt=""
   >
   <h2 style="color: var(--c2w-primary);">标题</h2>
   <p style="color: var(--c2w-text-light);">说明文字</p>
 </section>`,
+  },
+  {
+    name: '自定义布局注意（必看）',
+    desc: '使用 position: absolute 做自由布局时，必须给 section 设置 height: 700px，否则内容会因高度塌陷而不可见。字号请用 em 或 px，禁止使用 vw/vh/rem。',
+    code: `<!-- ✅ 正确：显式高度 + em/px 单位 -->
+<section style="position: relative; height: 700px; overflow: hidden;">
+  <h1 style="position: absolute; top: 5%; right: 5%;
+             font-size: 10em;">大字</h1>
+  <p style="position: absolute; bottom: 8%; left: 5%;
+            font-size: 1.2em;">说明文字</p>
+</section>
+
+<!-- ❌ 错误：没有 height，子元素全部 absolute → 高度塌陷，内容消失 -->
+<!-- ❌ 错误：font-size: 20vw → vw 基于视口而非幻灯片尺寸，缩放后不可控 -->
+<!-- ❌ 错误：font-size: 16rem → rem 基于根元素(≈16px)，与幻灯片基准(28px)不一致 -->`,
   },
   {
     name: 'c2w 元数据',
