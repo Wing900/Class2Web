@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useRef, useCallback, useEffect, useMemo } fro
 import Toolbar from './components/Toolbar/Toolbar';
 import PreviewPanel from './components/Preview/PreviewPanel';
 import WorkspacePanel from './components/Workspace/WorkspacePanel';
+import type { WorkspacePanelActions } from './components/Workspace/WorkspacePanel';
 import { parseC2WMeta, metaToCSS } from './utils/metaParser';
 import { resolveImages } from './utils/imageStore';
 import { useDebouncedValue } from './hooks/useDebouncedValue';
@@ -118,7 +119,37 @@ export default function App() {
     await exportHTML(code, theme, slideFont, customThemeCSS, meta.transition);
   }, [code, theme, slideFont, customThemeCSS, meta.transition]);
 
-  const handleInsert = useCallback((_snippet: string) => {}, []);
+  const handleInsert = useCallback((snippet: string) => {
+    const nextSnippet = snippet.trim();
+    if (!nextSnippet) return;
+    const base = code.trimEnd();
+    const separator = base ? '\n\n' : '';
+    updateActiveFileContent(`${base}${separator}${nextSnippet}\n`);
+  }, [code, updateActiveFileContent]);
+
+  const workspaceActions = useMemo<WorkspacePanelActions>(() => ({
+    selectFile,
+    createFolder,
+    createFile,
+    renameFile,
+    renameFolder,
+    deleteFile,
+    deleteFolder,
+    duplicateFile,
+    moveFile,
+    moveFolder,
+  }), [
+    selectFile,
+    createFolder,
+    createFile,
+    renameFile,
+    renameFolder,
+    deleteFile,
+    deleteFolder,
+    duplicateFile,
+    moveFile,
+    moveFolder,
+  ]);
 
   const slideCount = countSections(debouncedCode);
 
@@ -231,16 +262,7 @@ export default function App() {
             folders={workspace.folders}
             files={workspace.files}
             activeFileId={workspace.activeFileId}
-            onSelectFile={selectFile}
-            onCreateFolder={createFolder}
-            onCreateFile={createFile}
-            onRenameFile={renameFile}
-            onRenameFolder={renameFolder}
-            onDeleteFile={deleteFile}
-            onDeleteFolder={deleteFolder}
-            onDuplicateFile={duplicateFile}
-            onMoveFile={moveFile}
-            onMoveFolder={moveFolder}
+            actions={workspaceActions}
             onClose={() => setWorkspaceOpen(false)}
           />
         </div>

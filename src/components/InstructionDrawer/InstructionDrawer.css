@@ -94,7 +94,7 @@
 .instruction-card__code {
   position: relative;
   background: var(--c2w-ide-surface, #d8dbe3);
-  padding: 14px;
+  padding: 42px 14px 14px;
   border-radius: 8px;
   font-family: 'LXGW WenKai Mono', monospace;
   font-size: 12px;
@@ -104,10 +104,15 @@
   overflow-x: auto;
 }
 
-.instruction-card__copy {
+.instruction-card__actions {
   position: absolute;
   top: 8px;
   right: 8px;
+  display: flex;
+  gap: 6px;
+}
+
+.instruction-card__copy {
   background: var(--c2w-ide-divider, #c5cad3);
   color: var(--c2w-ide-text, #3b4252);
   border: none;
@@ -128,6 +133,29 @@
 }
 
 .instruction-card__copy:active {
+  transform: scale(0.97);
+}
+
+.instruction-card__insert {
+  background: #5e81ac;
+  color: #ffffff;
+  border: none;
+  height: 26px;
+  padding: 0 12px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'LXGW WenKai', sans-serif;
+  border-radius: 999px;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.instruction-card__insert:hover {
+  background: #4c6f9a;
+  transform: scale(1.04);
+}
+
+.instruction-card__insert:active {
   transform: scale(0.97);
 }
 
