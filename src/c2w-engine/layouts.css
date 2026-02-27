@@ -47,8 +47,8 @@
   align-items: flex-start;
   height: 100%;
   padding: 3em;
-  background: var(--c2w-primary) !important;
-  color: #fff !important;
+  background: var(--c2w-primary);
+  color: #fff;
 }
 
 .reveal section.c2w-chapter h2 {

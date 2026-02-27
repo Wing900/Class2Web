@@ -3,9 +3,16 @@
    全局硬约束：去圆角、去装饰线、排版基线
    ============================================ */
 
-/* 去圆角 — 工业美学 */
-* {
-  border-radius: 0 !important;
+/* 去圆角 — 工业美学（仅重置 Reveal 内部元素，不阻止行内样式覆盖） */
+.reveal section,
+.reveal pre,
+.reveal code,
+.reveal blockquote,
+.reveal table,
+.reveal th,
+.reveal td,
+.reveal img {
+  border-radius: 0;
 }
 
 /* Reveal 基础覆盖 */
@@ -92,8 +99,8 @@
 .reveal img {
   max-width: 100%;
   height: auto;
-  border: none !important;
-  box-shadow: none !important;
+  border: none;
+  box-shadow: none;
 }
 
 /* 页脚品牌水印 */
