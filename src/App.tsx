@@ -59,8 +59,11 @@ export default function App() {
   const meta = useMemo(() => parseC2WMeta(debouncedCode), [debouncedCode]);
   const customThemeCSS = useMemo(() => metaToCSS(meta), [meta]);
 
-  // Resolve c2w-img:// references to real dataURLs for preview
-  const previewHTML = useMemo(() => resolveImages(debouncedCode), [debouncedCode]);
+  // Strip c2w meta comment & resolve c2w-img:// references for preview
+  const previewHTML = useMemo(() => {
+    const stripped = debouncedCode.replace(/<!--\s*c2w\b[\s\S]*?-->\s*/, '');
+    return resolveImages(stripped);
+  }, [debouncedCode]);
 
   useEffect(() => {
     setCurrentSlide(0);
